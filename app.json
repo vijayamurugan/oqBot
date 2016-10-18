@@ -1,0 +1,15 @@
+{
+  "name": "OQ Bot for Messenger",
+  "description": "OQ Bot for Messenger",
+  "env": {
+    "FB_PAGE_TOKEN": {
+        "description": "Facebook Messenger Access Token",
+        "value":"",
+        "required":false
+    },
+    "FB_VERIFY_TOKEN": {
+        "description": "Facebook Verify Token",
+        "value":""
+    }
+  }
+}
