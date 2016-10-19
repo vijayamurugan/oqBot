@@ -59,15 +59,20 @@ let processText = (text, sender) => {
         let text = '';
         sendMessage({ text: `Here are your top ${match[1]} converstions for ${match[2]}` }, sender);
         model.findConversations(match[2], match[1]).then(function (conversation) {
-            console.log(conversation.length);
+            let value = conversation.length;
 
-            for (var i = 0; i < conversation.length; i++) {
-               text = text + conversation[i].CONVERSTAION + "<br>";
-               sendMessage({ text: ''+ conversation[i].CONVERSTAION }, sender);
+            for (var i = 0; i < value; i++) {
+                if (value <= 300) {
+                    sendMessage({ text: '' + conversation[i].CONVERSTAION }, sender);
+                }
+                else {
+                    sendMessage({ text: '' + conversation[i].CONVERSTAION.substring(0, 299) }, sender);
+                    sendMessage({ text: '' + conversation[i].CONVERSTAION.substring(300, value - 1) }, sender);
+                }
             }
         });
         console.log(text);
-         return;
+        return;
     }
 };
 
