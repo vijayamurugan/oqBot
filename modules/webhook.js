@@ -61,7 +61,7 @@ let processText = (text, sender) => {
         model.findConversations(match[2], match[1]).then(function (conversation) {
 
 
-            for (var i = 0; i < value; i++) {
+            for (var i = 0; i < conversation.length; i++) {
                 let value = conversation[i].CONVERSTAION.length;
                  console.log('VALUE='+value)
                 if (value <= 300) {
