@@ -29,32 +29,36 @@ let processText = (text, sender) => {
         sendMessage({
             text:
             `You can ask me things like:
-    Search account Acme
-    Search Acme in accounts
-    Search contact Smith
-    What are my top 3 opportunities?
-        `}, sender);
+    Tell me the engagement stage of xyz@abc
+    Tell me the Last 3 conversations with xyz@abc
+       `}, sender);
         return;
     }
 
-    match = text.match(/engagement (.*)/i);
+    match = text.match(/engagement stage of (.*)/i);
     if (match) {
         console.log(match[1]);
-        sendMessage({ text: `Here are your engagements for ${match[1]}` }, sender);
+        sendMessage({ text: `Here are your engagements stage of ${match[1]}` }, sender);
         model.findEngagements(match[1]).then(function (engagement) {
             sendMessage({
                 text:
-                'STAGE     : ' + engagement[0].STAGE +'</br>'+
-                'SCORE     : ' + engagement[0].SCORE +'</br>'+
-                'CONTACT   : ' + engagement[0].CONTACT +'</br>'+
+                'STAGE     : ' + engagement[0].STAGE + ' ' +
+                'SCORE     : ' + engagement[0].SCORE + ' ' +
+                'CONTACT   : ' + engagement[0].CONTACT + ' ' +
                 'NAME      : ' + engagement[0].NAME
             }, sender);
         });
 
         return;
     }
-
-    match = text.match(/Last (.*) conversations for (.*)/i);
+    String.prototype.allReplace = function (obj) {
+        var retStr = this;
+        for (var x in obj) {
+            retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
+        }
+        return retStr;
+    };
+    match = text.match(/Last (.*) conversations with (.*)/i);
     if (match) {
         let text = '';
         sendMessage({ text: `Here are your top ${match[1]} conversations for ${match[2]}` }, sender);
@@ -63,15 +67,15 @@ let processText = (text, sender) => {
 
             for (var i = 0; i < conversation.length; i++) {
                 let value = conversation[i].CONVERSTAION.length;
-                 console.log('VALUE='+value)
+                console.log('VALUE=' + value)
                 if (value <= 300) {
                     console.log(conversation[i].CONVERSTAION)
-                    sendMessage({ text: '' + conversation[i].CONVERSTAION }, sender);
+                    sendMessage({ text: '' + conversation[i].CONVERSTAION.allreplace({ '<p>': '', '<br>': '', '</p>': '', '</br>': '' }) }, sender);
                 }
                 else {
-                      console.log(conversation[i].CONVERSTAION)
-                    sendMessage({ text: '' + conversation[i].CONVERSTAION.substring(0, 299) }, sender);
-                    sendMessage({ text: '' + conversation[i].CONVERSTAION.substring(300, value - 1) }, sender);
+                    console.log(conversation[i].CONVERSTAION)
+                    sendMessage({ text: '' + conversation[i].CONVERSTAION.allreplace({ '<p>': '', '<br>': '', '</p>': '', '</br>': '' }).substring(0, 299) }, sender);
+                    sendMessage({ text: '' + conversation[i].CONVERSTAION.allreplace({ '<p>': '', '<br>': '', '</p>': '', '</br>': '' }).substring(300, value - 1) }, sender);
                 }
             }
         });
@@ -87,6 +91,8 @@ let handleGet = (req, res) => {
     }
     res.send('Error, wrong validation token');
 };
+
+
 
 let handlePost = (req, res) => {
     let events = req.body.entry[0].messaging;
