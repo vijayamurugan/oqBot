@@ -44,9 +44,9 @@ let processText = (text, sender) => {
         model.findEngagements(match[1]).then(function (engagement) {
             sendMessage({
                 text:
-                'STAGE     : ' + engagement[0].STAGE +
-                'SCORE     : ' + engagement[0].SCORE +
-                'CONTACT   : ' + engagement[0].CONTACT +
+                'STAGE     : ' + engagement[0].STAGE +'</br>'+
+                'SCORE     : ' + engagement[0].SCORE +'</br>'+
+                'CONTACT   : ' + engagement[0].CONTACT +'</br>'+
                 'NAME      : ' + engagement[0].NAME
             }, sender);
         });
@@ -57,17 +57,19 @@ let processText = (text, sender) => {
     match = text.match(/Last (.*) conversations for (.*)/i);
     if (match) {
         let text = '';
-        sendMessage({ text: `Here are your top ${match[1]} converstions for ${match[2]}` }, sender);
+        sendMessage({ text: `Here are your top ${match[1]} conversations for ${match[2]}` }, sender);
         model.findConversations(match[2], match[1]).then(function (conversation) {
 
 
             for (var i = 0; i < value; i++) {
                 let value = conversation[i].CONVERSTAION.length;
+                 console.log('VALUE='+value)
                 if (value <= 300) {
-                    console.log(value)
+                    console.log(conversation[i].CONVERSTAION)
                     sendMessage({ text: '' + conversation[i].CONVERSTAION }, sender);
                 }
                 else {
+                      console.log(conversation[i].CONVERSTAION)
                     sendMessage({ text: '' + conversation[i].CONVERSTAION.substring(0, 299) }, sender);
                     sendMessage({ text: '' + conversation[i].CONVERSTAION.substring(300, value - 1) }, sender);
                 }
