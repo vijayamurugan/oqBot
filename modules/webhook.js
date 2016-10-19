@@ -40,36 +40,36 @@ let processText = (text, sender) => {
     match = text.match(/engagement (.*)/i);
     if (match) {
         console.log(match[1]);
-        // sendMessage({text: `Here are your engagements for "${match[1]}"`}, sender);
+        sendMessage({ text: `Here are your engagements for "${match[1]}"` }, sender);
         model.findEngagements(match[1]).then(function (engagement) {
             console.log(engagement[0].STAGE);
             console.log(engagement[0].SCORE);
             console.log(engagement[0].CONTACT);
+            sendMessage({
+                text:
+                'STAGE     : ' + engagement[0].STAGE +
+                'SCORE     : ' + engagement[0].SCORE +
+                'CONTACT   : ' + engagement[0].CONTACT +
+                'NAME      : ' + engagement[0].NAME
+            }, sender);
         });
 
-        // sendMessage({text: 
-        //     'STAGE     : '+engagement.stage+
-        //     'SCORE     : '+engagement.SCORE+
-        //     'CONTACT   : '+engagement.CONTACT+
-        //     'NAME      : '+engagement.NAME
-        // }, sender);
         return;
     }
 
     match = text.match(/Last (.*) conversations for (.*)/i);
     if (match) {
         let text = '';
-        // sendMessage({ text: `Here are your top "${match[1]}" converstions for "${match[2]}"` }, sender);
+        sendMessage({ text: `Here are your top "${match[1]}" converstions for "${match[2]}"` }, sender);
         model.findConversations(match[2], match[1]).then(function (conversation) {
             console.log(conversation.length);
 
             for (var i = 0; i < conversation.length; i++) {
-                console.log(conversation[i].CONVERSTAION);
-                text = text + conversation[i].CONVERSTAION + "<br>";
+               text = text + conversation[i].CONVERSTAION + "<br>";
             }
         });
         console.log(text);
-        // sendMessage({ text: text }, sender);
+        sendMessage({ text: text }, sender);
         return;
     }
 };
