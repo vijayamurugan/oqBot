@@ -59,10 +59,12 @@ let processText = (text, sender) => {
         let text = '';
         sendMessage({ text: `Here are your top ${match[1]} converstions for ${match[2]}` }, sender);
         model.findConversations(match[2], match[1]).then(function (conversation) {
-            let value = conversation.length;
+
 
             for (var i = 0; i < value; i++) {
+                let value = conversation[i].CONVERSTAION.length;
                 if (value <= 300) {
+                    console.log(value)
                     sendMessage({ text: '' + conversation[i].CONVERSTAION }, sender);
                 }
                 else {
