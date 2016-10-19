@@ -13,7 +13,7 @@ function model() {
                         return;
                     }
                     else {
-                        resolve(rows);
+                         resolve(rows);
                     }
 
                 });

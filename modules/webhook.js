@@ -51,13 +51,6 @@ let processText = (text, sender) => {
 
         return;
     }
-    String.prototype.allReplace = function (obj) {
-        var retStr = this;
-        for (var x in obj) {
-            retStr = retStr.replace(new RegExp(x, 'g'), obj[x]);
-        }
-        return retStr;
-    };
     match = text.match(/Last (.*) conversations with (.*)/i);
     if (match) {
         let text = '';
@@ -67,7 +60,6 @@ let processText = (text, sender) => {
 
             for (var i = 0; i < conversation.length; i++) {
                 let value = conversation[i].CONVERSTAION.length;
-                console.log('VALUE=' + value)
                 let conv = conversation[i].CONVERSTAION;
                 conv = conv.replace(/<p>/gm, "");
                 conv = conv.replace(/<br>/gm, " ");
