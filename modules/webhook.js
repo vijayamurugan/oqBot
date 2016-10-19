@@ -68,14 +68,17 @@ let processText = (text, sender) => {
             for (var i = 0; i < conversation.length; i++) {
                 let value = conversation[i].CONVERSTAION.length;
                 console.log('VALUE=' + value)
+                let conv = conversation[i].CONVERSTAION;
+                conv = conv.replace(/<p>/gm, "");
+                conv = conv.replace(/<br>/gm, " ");
+                conv = conv.replace(/<\/p>/gm, "");
+                conv = conv.replace(/<\/br>/gm, " ");
                 if (value <= 300) {
-                    console.log(conversation[i].CONVERSTAION)
-                    sendMessage({ text: '' + conversation[i].CONVERSTAION.allreplace({ '<p>': '', '<br>': '', '</p>': '', '</br>': '' }) }, sender);
+                    sendMessage({ text: '' + conv }, sender);
                 }
                 else {
-                    console.log(conversation[i].CONVERSTAION)
-                    sendMessage({ text: '' + conversation[i].CONVERSTAION.allreplace({ '<p>': '', '<br>': '', '</p>': '', '</br>': '' }).substring(0, 299) }, sender);
-                    sendMessage({ text: '' + conversation[i].CONVERSTAION.allreplace({ '<p>': '', '<br>': '', '</p>': '', '</br>': '' }).substring(300, value - 1) }, sender);
+                    sendMessage({ text: '' + conv.substring(0, 299) }, sender);
+                    sendMessage({ text: '' + conv.substring(300, value - 1) }, sender);
                 }
             }
         });
