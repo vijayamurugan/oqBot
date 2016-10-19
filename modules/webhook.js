@@ -63,11 +63,11 @@ let processText = (text, sender) => {
 
             for (var i = 0; i < conversation.length; i++) {
                text = text + conversation[i].CONVERSTAION + "<br>";
+               sendMessage({ text: ''+ conversation[i].CONVERSTAION }, sender);
             }
         });
         console.log(text);
-        sendMessage({ text: text }, sender);
-        return;
+         return;
     }
 };
 
