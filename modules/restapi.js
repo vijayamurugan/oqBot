@@ -19,7 +19,7 @@ let processText = (req, res) => {
         res.json(output);
     }
     match = text.match(/engagement stage of (.*)/i);
-    if (match) {
+     if (match) {
         model.findEngagements(match[1]).then(function (engagement) {
         result ='STAGE     : ' + engagement[0].STAGE + '\n' +
                 'SCORE     : ' + engagement[0].SCORE + '\n' +
@@ -48,10 +48,7 @@ let processText = (req, res) => {
             res.json(output);
         });
     }
-    else{
-         output.value = "OOPS! I don't understand your query. Please ensure your email is Valid. Just type help I will be able to assist you.";
-            res.json(output);
-    }
+   
     return result;
 }
 exports.processText = processText;
