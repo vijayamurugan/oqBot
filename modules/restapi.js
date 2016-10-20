@@ -42,11 +42,15 @@ let processText = (req, res) => {
                 conv = conv.replace(/<br>/gm, " ");
                 conv = conv.replace(/<\/p>/gm, "");
                 conv = conv.replace(/<\/br>/gm, " ");
-                result = result + conv + '\n';
+                result = result + conv + '\n \n \n';
             }
             output.value = result;
             res.json(output);
         });
+    }
+    else{
+         output.value = "OOPS! I don't understand your query. Please ensure your email is Valid. Just type help I will be able to assist you.";
+            res.json(output);
     }
     return result;
 }
