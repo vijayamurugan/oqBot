@@ -13,8 +13,8 @@ let processText = (req, res) => {
     if (match) {
         result =
         `You can ask me things like:
-         Tell me the engagement stage of <EMAIL>
-         Tell me the Last 3 conversations with <EMAIL>`;
+         Tell me the engagement stage of xyz@abc
+         Tell me the Last 3 conversations with xyz@abc`;
         output.value = result;
         res.json(output);
     }
