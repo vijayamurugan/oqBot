@@ -13,15 +13,15 @@ let processText = (req, res) => {
     if (match) {
         result =
         `You can ask me things like:
-         Tell me the engagement stage of xyz@abc
-         Tell me the Last 3 conversations with xyz@abc`;
+         Tell me the engagement stage of <EMAIL>
+         Tell me the Last 3 conversations with <EMAIL>`;
         output.value = result;
         res.json(output);
     }
     match = text.match(/engagement stage of (.*)/i);
     if (match) {
         model.findEngagements(match[1]).then(function (engagement) {
-            result = 'STAGE     : ' + engagement[0].STAGE + '\n' +
+        result ='STAGE     : ' + engagement[0].STAGE + '\n' +
                 'SCORE     : ' + engagement[0].SCORE + '\n' +
                 'CONTACT   : ' + engagement[0].CONTACT + '\n' +
                 'NAME      : ' + engagement[0].NAME;
@@ -42,7 +42,7 @@ let processText = (req, res) => {
                 conv = conv.replace(/<br>/gm, " ");
                 conv = conv.replace(/<\/p>/gm, "");
                 conv = conv.replace(/<\/br>/gm, " ");
-                result = result + conv + "  ";
+                result = result + conv + '\n';
             }
             output.value = result;
             res.json(output);
