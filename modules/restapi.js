@@ -1,10 +1,13 @@
 "use strict";
 let model = require('./model');
 
+
+
 let processText = (req, res) => {
 
     let match;
-    let result='';
+    let result = '';
+    var output = new Object();
     let text = req.query.query;
     match = text.match(/help/i);
     if (match) {
@@ -12,7 +15,8 @@ let processText = (req, res) => {
             `You can ask me things like:
              Tell me the engagement stage of xyz@abc
             Tell me the Last 3 conversations with xyz@abc`;
-        res.json(result);
+        output.value = result;
+        res.json(output);
     }
     match = text.match(/engagement stage of (.*)/i);
     if (match) {
@@ -21,7 +25,8 @@ let processText = (req, res) => {
                 'SCORE     : ' + engagement[0].SCORE + ' ' +
                 'CONTACT   : ' + engagement[0].CONTACT + ' ' +
                 'NAME      : ' + engagement[0].NAME;
-                 res.json(result);
+            output.value = result;
+            res.json(output);
         });
 
     }
@@ -37,10 +42,10 @@ let processText = (req, res) => {
                 conv = conv.replace(/<br>/gm, " ");
                 conv = conv.replace(/<\/p>/gm, "");
                 conv = conv.replace(/<\/br>/gm, " ");
-                result = result + conv +"  ";
+                result = result + conv + "  ";
             }
-            res.json(result);
-
+            output.value = result;
+            res.json(output);
         });
     }
     return result;
