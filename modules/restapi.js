@@ -12,18 +12,18 @@ let processText = (req, res) => {
     match = text.match(/help/i);
     if (match) {
         result =
-            `You can ask me things like:
-             Tell me the engagement stage of xyz@abc
-            Tell me the Last 3 conversations with xyz@abc`;
+        `You can ask me things like:
+         Tell me the engagement stage of xyz@abc
+         Tell me the Last 3 conversations with xyz@abc`;
         output.value = result;
         res.json(output);
     }
     match = text.match(/engagement stage of (.*)/i);
     if (match) {
         model.findEngagements(match[1]).then(function (engagement) {
-            result = 'STAGE     : ' + engagement[0].STAGE + ' ' +
-                'SCORE     : ' + engagement[0].SCORE + ' ' +
-                'CONTACT   : ' + engagement[0].CONTACT + ' ' +
+            result = 'STAGE     : ' + engagement[0].STAGE + '\n' +
+                'SCORE     : ' + engagement[0].SCORE + '\n' +
+                'CONTACT   : ' + engagement[0].CONTACT + '\n' +
                 'NAME      : ' + engagement[0].NAME;
             output.value = result;
             res.json(output);
